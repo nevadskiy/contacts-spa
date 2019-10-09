@@ -10,8 +10,15 @@ class ContactsController extends Controller
 {
     public function store(Request $request)
     {
+        $data = $this->validate($request, [
+            'name' => ['required'],
+            'email' => ['required'],
+            'birthday' => [],
+            'company' => [],
+        ]);
+
         return response()->json(
-            Contact::create($request->all()), Response::HTTP_CREATED
+            Contact::create($data), Response::HTTP_CREATED
         );
     }
 }
