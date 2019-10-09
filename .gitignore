@@ -1,0 +1,32 @@
+# local configuration files
+.env
+
+# Dependencies
+/node_modules
+/vendor
+
+# Dist
+/public/css
+/public/js
+/public/hot
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw*
+
+# Other
+/public/storage
+/storage/*.key
+Homestead.json
+Homestead.yaml
+.phpunit.result.cache

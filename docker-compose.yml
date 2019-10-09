@@ -1,0 +1,139 @@
+version: '3'
+
+services:
+  ### Application server ########################
+  nginx:
+    build:
+      context: docker/nginx
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/var/www
+      # Storing logs
+      - ./docker/nginx/logs:/var/log/nginx
+    ports:
+      - 8080:80
+    links:
+      - php-fpm
+
+  ### PHP FastCGI Process Manager ###############
+  php-fpm:
+    build:
+      context: docker/php-fpm
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/var/www
+    links:
+      - mysql
+      - redis
+      - mailhog
+    environment:
+      PHP_IDE_CONFIG: "serverName=Docker"
+
+  ### PHP-CLI ##################################
+  php-cli:
+    build:
+      context: docker/php-cli
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/var/www
+    links:
+      - mysql
+      - mysql-testing
+      - redis
+      - mailhog
+    # Do not down CLI after run
+    tty: true
+    environment:
+      PHP_IDE_CONFIG: "serverName=Docker"
+
+  ### MySQL Database ##########################
+  mysql:
+    build:
+      context: docker/mysql
+      dockerfile: Dockerfile
+    volumes:
+      - mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_USER=app
+      - MYSQL_PASSWORD=app
+      - MYSQL_DATABASE=app
+    ports:
+      - 33061:3306
+
+  ### MySQL for testing ########################
+  mysql-testing:
+    build:
+      context: docker/mysql
+      dockerfile: Dockerfile
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_USER=app
+      - MYSQL_PASSWORD=app
+      - MYSQL_DATABASE=app
+
+  ### Redis ##############################
+  redis:
+    build:
+      context: docker/redis
+      dockerfile: Dockerfile
+    volumes:
+      - redis:/data
+    ports:
+      - 63791:6379
+
+  ### Mailhog (For mail testing) ####
+  mailhog:
+    build:
+      context: docker/mailhog
+      dockerfile: Dockerfile
+    ports:
+      # SMTP server
+      - 1026:1025
+      # Inbox web page
+      - 8026:8025
+
+  ### Laravel Echo Server ################
+  laravel-echo-server:
+    build:
+      context: docker/laravel-echo-server
+      dockerfile: Dockerfile
+    ports:
+      - 6002:6001
+    links:
+      - redis
+      - supervisor
+
+  ### Supervisor ###################
+  supervisor:
+    build:
+      context: docker/supervisor
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/var/www
+      # Supervisor configurations
+      - ./docker/supervisor/conf.d:/etc/supervisor/conf.d
+      # Supervisor logs
+      - ./docker/supervisor/logs:/home/logs
+      - ./docker/supervisor/logs:/var/log
+    links:
+      - nginx
+      - mysql
+      - redis
+      - mailhog
+
+  ### Node ###############################
+  node:
+    build:
+      context: docker/node
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/var/www
+    # Do not down CLI after run
+    tty: true
+
+volumes:
+  mysql:
+    driver: local
+  redis:
+    driver: local
