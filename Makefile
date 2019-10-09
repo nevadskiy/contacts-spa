@@ -104,11 +104,19 @@ db-dump:
 
 
 #-----------------------------------------------------------
+# Front-End
+#-----------------------------------------------------------
+
+watch:
+	docker-compose exec node yarn watch
+
+
+#-----------------------------------------------------------
 # Dependencies
 #-----------------------------------------------------------
 
 composer-install:
-		docker-compose exec php-cli composer install
+	docker-compose exec php-cli composer install
 
 dependencies-update:
-		docker-compose exec php-cli composer update
+	docker-compose exec php-cli composer update
