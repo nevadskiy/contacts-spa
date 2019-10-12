@@ -12,7 +12,7 @@ class ContactsController extends Controller
     {
         $data = $this->validate($request, [
             'name' => ['required'],
-            'email' => ['required'],
+            'email' => ['required', 'email'],
             'birthday' => ['required'],
             'company' => ['required'],
         ]);

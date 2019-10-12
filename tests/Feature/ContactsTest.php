@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Contact;
+use DateTimeInterface;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Http\Response;
@@ -25,7 +26,6 @@ class ContactsTest extends TestCase
         $contact = Contact::first();
 
         $response->assertStatus(Response::HTTP_CREATED);
-
         $this->assertCount(1, Contact::all());
         $this->assertEquals('Test contact', $contact->name);
         $this->assertEquals('test@mail.com', $contact->email);
@@ -75,6 +75,31 @@ class ContactsTest extends TestCase
 
         $response->assertJsonValidationErrors(['company']);
         $this->assertEmpty(Contact::all());
+    }
+
+    /** @test */
+    public function an_email_must_be_a_valid_email(): void
+    {
+        $response = $this->storeContact([
+            'email' => 'invalid email',
+        ]);
+
+        $response->assertJsonValidationErrors(['email']);
+        $this->assertEmpty(Contact::all());
+    }
+
+    /** @test */
+    public function birthdays_are_properly_stored(): void
+    {
+        $this->storeContact([
+            'birthday' => '05/14/1990',
+        ]);
+
+        $contact = Contact::first();
+
+        $this->assertCount(1, Contact::all());
+        $this->assertInstanceOf(DateTimeInterface::class, $contact->birthday);
+        $this->assertEquals('05-14-1990', $contact->birthday->format('m-d-Y'));
     }
 
     private function storeContact(array $overrides = []): TestResponse
