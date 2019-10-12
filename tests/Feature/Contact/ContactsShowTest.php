@@ -3,19 +3,16 @@
 namespace Tests\Feature\Contact;
 
 use App\Contact;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\ApiTestCase;
 
-class ContactsShowTest extends TestCase
+class ContactsShowTest extends ApiTestCase
 {
-    use RefreshDatabase;
-
     /** @test */
     public function contacts_can_be_retrieved(): void
     {
         $contact = factory(Contact::class)->create();
 
-        $response = $this->getJson("/api/contacts/{$contact->id}");
+        $response = $this->signIn()->getJson("/api/contacts/{$contact->id}");
 
         $response->assertOk();
         $response->assertJson([

@@ -3,22 +3,29 @@
 namespace Tests\Feature\Contact;
 
 use App\Contact;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\Response;
-use Tests\TestCase;
+use Tests\ApiTestCase;
 
-class ContactsDeleteTest extends TestCase
+class ContactsDeleteTest extends ApiTestCase
 {
-    use RefreshDatabase;
+    /** @test */
+    public function contacts_can_be_removed_by_user(): void
+    {
+        $contact = factory(Contact::class)->create();
+
+        $response = $this->signIn()->deleteJson("/api/contacts/{$contact->id}");
+
+        $response->assertNoContent();
+        $this->assertEmpty(Contact::all());
+    }
 
     /** @test */
-    public function contacts_can_be_removed(): void
+    public function guests_cannot_remove_contacts(): void
     {
         $contact = factory(Contact::class)->create();
 
         $response = $this->deleteJson("/api/contacts/{$contact->id}");
 
-        $response->assertStatus(Response::HTTP_NO_CONTENT);
-        $this->assertEmpty(Contact::all());
+        $response->assertUnauthorized();
+        $this->assertCount(1, Contact::all());
     }
 }

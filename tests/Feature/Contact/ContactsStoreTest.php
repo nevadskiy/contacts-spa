@@ -4,19 +4,25 @@ namespace Tests\Feature\Contact;
 
 use App\Contact;
 use DateTimeInterface;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Http\Response;
-use Tests\TestCase;
+use Tests\ApiTestCase;
 
-class ContactsStoreTest extends TestCase
+class ContactsStoreTest extends ApiTestCase
 {
-    use RefreshDatabase;
+    /** @test */
+    public function guests_cannot_store_contacts(): void
+    {
+        $response = $this->storeContact();
+
+        $response->assertUnauthorized();
+        $this->assertEmpty(Contact::all());
+    }
 
     /** @test */
-    public function a_contact_can_be_added(): void
+    public function a_contact_can_be_added_by_users(): void
     {
-        $response = $this->postJson('/api/contacts', [
+        $response = $this->signIn()->postJson('/api/contacts', [
             'name' => 'Test contact',
             'email' => 'test@mail.com',
             'birthday' => '05/14/1990',
@@ -29,14 +35,14 @@ class ContactsStoreTest extends TestCase
         $this->assertCount(1, Contact::all());
         $this->assertEquals('Test contact', $contact->name);
         $this->assertEquals('test@mail.com', $contact->email);
-        $this->assertEquals('05/14/1990', $contact->birthday);
+        $this->assertEquals('05/14/1990', $contact->birthday->format('m/d/Y'));
         $this->assertEquals('ABC Company', $contact->company);
     }
 
     /** @test */
     public function a_name_is_required(): void
     {
-        $response = $this->storeContact([
+        $response = $this->signIn()->storeContact([
             'name' => '',
         ]);
 
@@ -47,7 +53,7 @@ class ContactsStoreTest extends TestCase
     /** @test */
     public function email_is_required(): void
     {
-        $response = $this->storeContact([
+        $response = $this->signIn()->storeContact([
             'email' => '',
         ]);
 
@@ -58,7 +64,7 @@ class ContactsStoreTest extends TestCase
     /** @test */
     public function a_birthday_is_required(): void
     {
-        $response = $this->storeContact([
+        $response = $this->signIn()->storeContact([
             'birthday' => '',
         ]);
 
@@ -69,7 +75,7 @@ class ContactsStoreTest extends TestCase
     /** @test */
     public function a_birthday_must_be_a_valid_date(): void
     {
-        $response = $this->storeContact([
+        $response = $this->signIn()->storeContact([
             'birthday' => 'INVALID DATE',
         ]);
 
@@ -80,7 +86,7 @@ class ContactsStoreTest extends TestCase
     /** @test */
     public function a_company_is_required(): void
     {
-        $response = $this->storeContact([
+        $response = $this->signIn()->storeContact([
             'company' => '',
         ]);
 
@@ -91,7 +97,7 @@ class ContactsStoreTest extends TestCase
     /** @test */
     public function an_email_must_be_a_valid_email(): void
     {
-        $response = $this->storeContact([
+        $response = $this->signIn()->storeContact([
             'email' => 'invalid email',
         ]);
 
@@ -102,7 +108,7 @@ class ContactsStoreTest extends TestCase
     /** @test */
     public function birthdays_are_properly_stored(): void
     {
-        $this->storeContact([
+        $this->signIn()->storeContact([
             'birthday' => '05/14/1990',
         ]);
 

@@ -3,16 +3,28 @@
 namespace Tests\Feature\Contact;
 
 use App\Contact;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestResponse;
-use Tests\TestCase;
+use Tests\ApiTestCase;
 
-class ContactsUpdateTest extends TestCase
+class ContactsUpdateTest extends ApiTestCase
 {
-    use RefreshDatabase;
+    /** @test */
+    public function guests_cannot_update_contacts(): void
+    {
+        $contact = factory(Contact::class)->create([
+            'email' => 'old@mail.com',
+        ]);
+
+        $response = $this->updateContact($contact, [
+            'email' => 'new@mail.com',
+        ]);
+
+        $response->assertUnauthorized();
+        $this->assertEquals('old@mail.com', $contact->fresh()->email);
+    }
 
     /** @test */
-    public function contacts_can_be_updated(): void
+    public function contacts_can_be_updated_by_users(): void
     {
         $contact = factory(Contact::class)->create([
             'name' => 'Old name',
@@ -21,7 +33,7 @@ class ContactsUpdateTest extends TestCase
             'company' => 'OLD Company',
         ]);
 
-        $response = $this->putJson("/api/contacts/{$contact->id}", [
+        $response = $this->signIn()->putJson("/api/contacts/{$contact->id}", [
             'name' => 'New name',
             'email' => 'new@mail.com',
             'birthday' => '05/14/2000',
@@ -45,7 +57,7 @@ class ContactsUpdateTest extends TestCase
             'name' => 'Old name',
         ]);
 
-        $response = $this->updateContact($contact, [
+        $response = $this->signIn()->updateContact($contact, [
             'name' => '',
         ]);
 
@@ -60,7 +72,7 @@ class ContactsUpdateTest extends TestCase
             'email' => 'old@mail.com',
         ]);
 
-        $response = $this->updateContact($contact, [
+        $response = $this->signIn()->updateContact($contact, [
             'email' => '',
         ]);
 
@@ -75,7 +87,7 @@ class ContactsUpdateTest extends TestCase
             'email' => 'old@mail.com',
         ]);
 
-        $response = $this->updateContact($contact, [
+        $response = $this->signIn()->updateContact($contact, [
             'email' => 'INVALID EMAIL',
         ]);
 
@@ -90,7 +102,7 @@ class ContactsUpdateTest extends TestCase
             'birthday' => '05/14/1990',
         ]);
 
-        $response = $this->updateContact($contact, [
+        $response = $this->signIn()->updateContact($contact, [
             'birthday' => '',
         ]);
 
@@ -105,7 +117,7 @@ class ContactsUpdateTest extends TestCase
             'birthday' => '05/14/1990',
         ]);
 
-        $response = $this->updateContact($contact, [
+        $response = $this->signIn()->updateContact($contact, [
             'birthday' => 'INVALID DATE',
         ]);
 
@@ -120,7 +132,7 @@ class ContactsUpdateTest extends TestCase
             'company' => 'Old company',
         ]);
 
-        $response = $this->updateContact($contact, [
+        $response = $this->signIn()->updateContact($contact, [
             'company' => '',
         ]);
 
