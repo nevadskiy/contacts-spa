@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Contact;
 
 use App\Contact;
 use DateTimeInterface;
@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Http\Response;
 use Tests\TestCase;
 
-class ContactsTest extends TestCase
+class ContactsStoreTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -60,6 +60,17 @@ class ContactsTest extends TestCase
     {
         $response = $this->storeContact([
             'birthday' => '',
+        ]);
+
+        $response->assertJsonValidationErrors(['birthday']);
+        $this->assertEmpty(Contact::all());
+    }
+
+    /** @test */
+    public function a_birthday_must_be_a_valid_date(): void
+    {
+        $response = $this->storeContact([
+            'birthday' => 'INVALID DATE',
         ]);
 
         $response->assertJsonValidationErrors(['birthday']);

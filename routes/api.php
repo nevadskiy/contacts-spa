@@ -18,3 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('contacts', 'ContactsController@store');
+Route::get('contacts/{contact}', 'ContactsController@show');
+Route::put('contacts/{contact}', 'ContactsController@update');
+Route::delete('contacts/{contact}', 'ContactsController@destroy');
