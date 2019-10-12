@@ -55,6 +55,28 @@ class ContactsTest extends TestCase
         $this->assertEmpty(Contact::all());
     }
 
+    /** @test */
+    public function a_birthday_is_required(): void
+    {
+        $response = $this->storeContact([
+            'birthday' => '',
+        ]);
+
+        $response->assertJsonValidationErrors(['birthday']);
+        $this->assertEmpty(Contact::all());
+    }
+
+    /** @test */
+    public function a_company_is_required(): void
+    {
+        $response = $this->storeContact([
+            'company' => '',
+        ]);
+
+        $response->assertJsonValidationErrors(['company']);
+        $this->assertEmpty(Contact::all());
+    }
+
     private function storeContact(array $overrides = []): TestResponse
     {
         return $this->postJson('/api/contacts', array_merge([

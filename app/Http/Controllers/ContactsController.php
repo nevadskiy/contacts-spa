@@ -13,8 +13,8 @@ class ContactsController extends Controller
         $data = $this->validate($request, [
             'name' => ['required'],
             'email' => ['required'],
-            'birthday' => [],
-            'company' => [],
+            'birthday' => ['required'],
+            'company' => ['required'],
         ]);
 
         return response()->json(
