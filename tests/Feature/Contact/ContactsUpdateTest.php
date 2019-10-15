@@ -42,12 +42,16 @@ class ContactsUpdateTest extends ApiTestCase
 
         $contact = $contact->fresh();
 
-        $response->assertOk();
-
         $this->assertEquals('New name', $contact->name);
         $this->assertEquals('new@mail.com', $contact->email);
         $this->assertEquals('05/14/2000', $contact->birthday->format('m/d/Y'));
         $this->assertEquals('NEW Company', $contact->company);
+
+        $response->assertOk();
+        $response->assertJson([
+            'data' => ['id' => $contact->id],
+            'links' => ['self' => route('contacts.show', $contact->id)]
+        ]);
     }
 
     /** @test */

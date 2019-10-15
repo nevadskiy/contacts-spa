@@ -22,7 +22,10 @@ class ContactsIndexTest extends ApiTestCase
         $response->assertJsonFragment(['id' => $contact2->id]);
         $response->assertJsonFragment(['id' => $contact3->id]);
         $response->assertJsonStructure(['data' => [
-            '*' => ['id', 'name', 'birthday', 'company', 'last_updated']
+            '*' => [
+                'data' => ['id', 'name', 'birthday', 'company', 'last_updated'],
+                'links' => ['self']
+            ]
         ]]);
     }
 }

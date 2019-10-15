@@ -23,6 +23,9 @@ class ContactsShowTest extends ApiTestCase
                 'company' => $contact->company,
                 'last_updated' => $contact->updated_at->diffForHumans(),
             ],
+            'links' => [
+                'self' => route('contacts.show', $contact)
+            ],
         ]);
     }
 

@@ -46,7 +46,7 @@ class ContactsStoreTest extends ApiTestCase
         $response->assertStatus(Response::HTTP_CREATED);
         $response->assertJson([
             'data' => ['id' => $contact->id],
-            'links' => ['self' => url("/api/contacts/{$contact->id}")]
+            'links' => ['self' => route('contacts.show', $contact)]
         ]);
     }
 

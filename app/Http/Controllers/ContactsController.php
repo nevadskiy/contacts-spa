@@ -49,7 +49,7 @@ class ContactsController extends Controller
 
         $contact->update($request->all());
 
-        return response()->json([], Response::HTTP_OK);
+        return new ContactResource($contact->fresh());
     }
 
     public function destroy(Request $request, Contact $contact)
