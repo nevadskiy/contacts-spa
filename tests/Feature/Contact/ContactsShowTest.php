@@ -3,7 +3,6 @@
 namespace Tests\Feature\Contact;
 
 use App\Contact;
-use App\User;
 use Tests\ApiTestCase;
 
 class ContactsShowTest extends ApiTestCase
@@ -16,7 +15,7 @@ class ContactsShowTest extends ApiTestCase
         $response = $this->signIn($contact->user)->getJson("/api/contacts/{$contact->id}");
 
         $response->assertOk();
-        $response->assertJson([
+        $response->assertExactJson([
             'data' => [
                 'id' => $contact->id,
                 'name' => $contact->name,

@@ -4,6 +4,7 @@ Route::group([
     'middleware' => 'auth:api',
 ], function () {
 
+    Route::get('contacts', 'ContactsController@index');
     Route::post('contacts', 'ContactsController@store');
     Route::get('contacts/{contact}', 'ContactsController@show');
     Route::put('contacts/{contact}', 'ContactsController@update');

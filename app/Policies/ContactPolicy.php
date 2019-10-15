@@ -11,6 +11,16 @@ class ContactPolicy
     use HandlesAuthorization;
 
     /**
+     * Determine whether the user can view any contacts.
+     *
+     * @return bool
+     */
+    public function viewAny(): bool
+    {
+        return true;
+    }
+
+    /**
      * Determine whether the user can view the contact.
      *
      * @param User $user
@@ -20,6 +30,16 @@ class ContactPolicy
     public function view(User $user, Contact $contact): bool
     {
         return $this->touch($user, $contact);
+    }
+
+    /**
+     * Determine whether the user can create the contacts.
+     *
+     * @return bool
+     */
+    public function create(): bool
+    {
+        return true;
     }
 
     /**
