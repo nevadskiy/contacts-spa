@@ -1,8 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
+<div class="flex justify-center items-center mx-auto h-full bg-gray-400">
+    <div class="max-w-sm w-full p-6 bg-blue-900 rounded-lg shadow-xl">
+        <h1 class="text-white text-3xl">Welcome back</h1>
+        <h2 class="mt-2 text-blue-300">Enter your credentials below</h2>
+
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
