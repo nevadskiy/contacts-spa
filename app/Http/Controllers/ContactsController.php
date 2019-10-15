@@ -30,7 +30,7 @@ class ContactsController extends Controller
 
         $contact = $request->user()->contacts()->create($data);
 
-        return response()->json($contact, Response::HTTP_CREATED);
+        return new ContactResource($contact);
     }
 
     public function show(Request $request, Contact $contact)

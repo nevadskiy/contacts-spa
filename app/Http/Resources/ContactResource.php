@@ -20,11 +20,16 @@ class ContactResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'id' => $this->resource->id,
-            'name' => $this->resource->name,
-            'birthday' => $this->resource->birthday->format('m/d/Y'),
-            'company' => $this->resource->company,
-            'last_updated' => $this->resource->updated_at->diffForHumans(),
+            'data' => [
+                'id' => $this->resource->id,
+                'name' => $this->resource->name,
+                'birthday' => $this->resource->birthday->format('m/d/Y'),
+                'company' => $this->resource->company,
+                'last_updated' => $this->resource->updated_at->diffForHumans(),
+            ],
+            'links' => [
+                'self' => route('contacts.show', $this->resource),
+            ],
         ];
     }
 }

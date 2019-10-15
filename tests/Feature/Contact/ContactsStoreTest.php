@@ -36,13 +36,18 @@ class ContactsStoreTest extends ApiTestCase
 
         $contact = Contact::first();
 
-        $response->assertStatus(Response::HTTP_CREATED);
         $this->assertCount(1, Contact::all());
         $this->assertEquals('Test contact', $contact->name);
         $this->assertEquals('test@mail.com', $contact->email);
         $this->assertEquals('05/14/1990', $contact->birthday->format('m/d/Y'));
         $this->assertEquals('ABC Company', $contact->company);
         $this->assertTrue($contact->user->is($user));
+
+        $response->assertStatus(Response::HTTP_CREATED);
+        $response->assertJson([
+            'data' => ['id' => $contact->id],
+            'links' => ['self' => url("/api/contacts/{$contact->id}")]
+        ]);
     }
 
     /** @test */
