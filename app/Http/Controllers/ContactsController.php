@@ -24,9 +24,7 @@ class ContactsController extends Controller
 
     public function show(Request $request, Contact $contact)
     {
-        if ($request->user()->isNot($contact->user)) {
-            return abort(Response::HTTP_FORBIDDEN);
-        }
+        $this->authorize('view', $contact);
 
         return response()->json([
             'data' => [
@@ -41,9 +39,7 @@ class ContactsController extends Controller
 
     public function update(Request $request, Contact $contact)
     {
-        if ($request->user()->isNot($contact->user)) {
-            return abort(Response::HTTP_FORBIDDEN);
-        }
+        $this->authorize('update', $contact);
 
         $this->validate($request, [
             'name' => ['required'],
@@ -59,9 +55,7 @@ class ContactsController extends Controller
 
     public function destroy(Request $request, Contact $contact)
     {
-        if ($request->user()->isNot($contact->user)) {
-            return abort(Response::HTTP_FORBIDDEN);
-        }
+        $this->authorize('delete', $contact);
 
         $contact->delete();
 
