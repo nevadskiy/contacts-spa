@@ -8,14 +8,25 @@ use Tests\ApiTestCase;
 class ContactsDeleteTest extends ApiTestCase
 {
     /** @test */
-    public function contacts_can_be_removed_by_user(): void
+    public function contacts_can_be_removed_by_owners(): void
+    {
+        $contact = factory(Contact::class)->create();
+
+        $response = $this->signIn($contact->user)->deleteJson("/api/contacts/{$contact->id}");
+
+        $response->assertNoContent();
+        $this->assertEmpty(Contact::all());
+    }
+
+    /** @test */
+    public function contacts_cannot_be_removed_by_another_users(): void
     {
         $contact = factory(Contact::class)->create();
 
         $response = $this->signIn()->deleteJson("/api/contacts/{$contact->id}");
 
-        $response->assertNoContent();
-        $this->assertEmpty(Contact::all());
+        $response->assertForbidden();
+        $this->assertCount(1, Contact::all());
     }
 
     /** @test */

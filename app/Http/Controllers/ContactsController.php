@@ -17,13 +17,17 @@ class ContactsController extends Controller
             'company' => ['required'],
         ]);
 
-        return response()->json(
-            Contact::create($data), Response::HTTP_CREATED
-        );
+        $contact = $request->user()->contacts()->create($data);
+
+        return response()->json($contact, Response::HTTP_CREATED);
     }
 
-    public function show(Contact $contact)
+    public function show(Request $request, Contact $contact)
     {
+        if ($request->user()->isNot($contact->user)) {
+            return abort(Response::HTTP_FORBIDDEN);
+        }
+
         return response()->json([
             'data' => [
                 'id' => $contact->id,
@@ -37,6 +41,10 @@ class ContactsController extends Controller
 
     public function update(Request $request, Contact $contact)
     {
+        if ($request->user()->isNot($contact->user)) {
+            return abort(Response::HTTP_FORBIDDEN);
+        }
+
         $this->validate($request, [
             'name' => ['required'],
             'email' => ['required', 'email'],
@@ -49,8 +57,12 @@ class ContactsController extends Controller
         return response()->json([], Response::HTTP_OK);
     }
 
-    public function destroy(Contact $contact)
+    public function destroy(Request $request, Contact $contact)
     {
+        if ($request->user()->isNot($contact->user)) {
+            return abort(Response::HTTP_FORBIDDEN);
+        }
+
         $contact->delete();
 
         return response()->json([], Response::HTTP_NO_CONTENT);

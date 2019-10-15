@@ -3,6 +3,7 @@
 namespace Tests\Feature\Contact;
 
 use App\Contact;
+use App\User;
 use DateTimeInterface;
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Http\Response;
@@ -22,7 +23,11 @@ class ContactsStoreTest extends ApiTestCase
     /** @test */
     public function a_contact_can_be_added_by_users(): void
     {
-        $response = $this->signIn()->postJson('/api/contacts', [
+        $user = factory(User::class)->create();
+
+        $this->signIn($user);
+
+        $response = $this->postJson('/api/contacts', [
             'name' => 'Test contact',
             'email' => 'test@mail.com',
             'birthday' => '05/14/1990',
@@ -37,6 +42,7 @@ class ContactsStoreTest extends ApiTestCase
         $this->assertEquals('test@mail.com', $contact->email);
         $this->assertEquals('05/14/1990', $contact->birthday->format('m/d/Y'));
         $this->assertEquals('ABC Company', $contact->company);
+        $this->assertTrue($contact->user->is($user));
     }
 
     /** @test */

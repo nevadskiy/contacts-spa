@@ -24,7 +24,7 @@ class ContactsUpdateTest extends ApiTestCase
     }
 
     /** @test */
-    public function contacts_can_be_updated_by_users(): void
+    public function contacts_can_be_updated_by_owners(): void
     {
         $contact = factory(Contact::class)->create([
             'name' => 'Old name',
@@ -33,7 +33,7 @@ class ContactsUpdateTest extends ApiTestCase
             'company' => 'OLD Company',
         ]);
 
-        $response = $this->signIn()->putJson("/api/contacts/{$contact->id}", [
+        $response = $this->signIn($contact->user)->putJson("/api/contacts/{$contact->id}", [
             'name' => 'New name',
             'email' => 'new@mail.com',
             'birthday' => '05/14/2000',
@@ -51,13 +51,25 @@ class ContactsUpdateTest extends ApiTestCase
     }
 
     /** @test */
+    public function contacts_cannot_be_updated_by_another_users(): void
+    {
+        $contact = factory(Contact::class)->create(['name' => 'Old name']);
+
+        $response = $this->signIn()->updateContact($contact, ['name' => 'New name']);
+
+        $response->assertForbidden();
+
+        $this->assertEquals('Old name', $contact->fresh()->name);
+    }
+
+    /** @test */
     public function a_name_is_required_for_updating_contacts(): void
     {
         $contact = factory(Contact::class)->create([
             'name' => 'Old name',
         ]);
 
-        $response = $this->signIn()->updateContact($contact, [
+        $response = $this->signIn($contact->user)->updateContact($contact, [
             'name' => '',
         ]);
 
@@ -72,7 +84,7 @@ class ContactsUpdateTest extends ApiTestCase
             'email' => 'old@mail.com',
         ]);
 
-        $response = $this->signIn()->updateContact($contact, [
+        $response = $this->signIn($contact->user)->updateContact($contact, [
             'email' => '',
         ]);
 
@@ -87,7 +99,7 @@ class ContactsUpdateTest extends ApiTestCase
             'email' => 'old@mail.com',
         ]);
 
-        $response = $this->signIn()->updateContact($contact, [
+        $response = $this->signIn($contact->user)->updateContact($contact, [
             'email' => 'INVALID EMAIL',
         ]);
 
@@ -102,7 +114,7 @@ class ContactsUpdateTest extends ApiTestCase
             'birthday' => '05/14/1990',
         ]);
 
-        $response = $this->signIn()->updateContact($contact, [
+        $response = $this->signIn($contact->user)->updateContact($contact, [
             'birthday' => '',
         ]);
 
@@ -117,7 +129,7 @@ class ContactsUpdateTest extends ApiTestCase
             'birthday' => '05/14/1990',
         ]);
 
-        $response = $this->signIn()->updateContact($contact, [
+        $response = $this->signIn($contact->user)->updateContact($contact, [
             'birthday' => 'INVALID DATE',
         ]);
 
@@ -132,7 +144,7 @@ class ContactsUpdateTest extends ApiTestCase
             'company' => 'Old company',
         ]);
 
-        $response = $this->signIn()->updateContact($contact, [
+        $response = $this->signIn($contact->user)->updateContact($contact, [
             'company' => '',
         ]);
 
