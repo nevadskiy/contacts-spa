@@ -66,12 +66,12 @@
             <div class="mt-4">
                 <button type="submit" class="w-full py-2 px-2 bg-gray-400 uppercase rounded text-blue-800 font-bold hover:bg-gray-500">Login</button>
             </div>
-
-            <div class="mt-4 flex justify-between">
-                <a class="text-blue-100" href="{{ route('password.request') }}">Forgot Your Password?</a>
-                <a class="text-blue-100" href="{{ route('register') }}">Register</a>
-            </div>
         </form>
+
+        <div class="mt-4 flex justify-between">
+            <a class="text-blue-100 font-bold" href="{{ route('password.request') }}">Forgot Your Password?</a>
+            <a class="text-blue-100 font-bold" href="{{ route('register') }}">Register</a>
+        </div>
     </div>
 </div>
 @endsection

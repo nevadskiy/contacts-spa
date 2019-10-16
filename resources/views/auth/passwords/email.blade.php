@@ -1,47 +1,52 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
+    <div class="flex justify-center items-center mx-auto h-full bg-gray-400">
+        <div class="max-w-sm w-full p-6 bg-blue-900 rounded-lg shadow-xl">
+            <h1 class="text-blue-100 text-3xl">Reset password</h1>
+            <h2 class="mt-2 text-blue-300">Enter your email to reset password</h2>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+            @if (session('status'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('status') }}
+                </div>
+            @endif
+
+            <form method="POST" action="{{ route('password.email') }}" class="mt-8">
+                @csrf
+
+                <div class="relative">
+                    <label for="email" class="absolute mt-2 ml-2 uppercase text-blue-500 text-xs font-bold">E-mail</label>
+                    <input
+                        id="email"
+                        type="email"
+                        class="w-full pt-8 pb-2 px-2 text-blue-100 bg-blue-800 rounded placeholder-gray-600 outline-none focus:bg-blue-700"
+                        name="email"
+                        value="{{ old('email') }}"
+                        required
+                        autocomplete="email"
+                        autofocus
+                        placeholder="your@email.com"
+                    >
+
+                    @if ($errors->has('email'))
+                        <div class="mt-1">
+                            <span class="text-red-600 text-sm">
+                                <strong>{{ $errors->first('email') }}</strong>
+                            </span>
                         </div>
                     @endif
-
-                    <form method="POST" action="{{ route('password.email') }}">
-                        @csrf
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Send Password Reset Link') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
                 </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="w-full py-2 px-2 bg-gray-400 uppercase rounded text-blue-800 font-bold hover:bg-gray-500">Send Password Reset Link</button>
+                </div>
+            </form>
+
+            <div class="mt-4 flex justify-between">
+                <a class="text-blue-100 font-bold" href="{{ route('login') }}">Login</a>
+                <a class="text-blue-100 font-bold" href="{{ route('register') }}">Register</a>
             </div>
         </div>
     </div>
-</div>
 @endsection
