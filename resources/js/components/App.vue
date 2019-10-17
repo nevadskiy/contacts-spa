@@ -88,9 +88,15 @@
             </div>
         </nav>
 
-        <div>
-            <div>Latest contacts</div>
-            <router-view></router-view>
+        <div class="flex flex-1 flex-col">
+            <div class="flex flex-shrink-0 items-center justify-between py-6 px-6 border-b border-gray-400">
+                <h1 class="text-gray-800">Latest Contacts</h1>
+                <div class="w-10 h-10 flex justify-center items-center border border-gray-400 rounded-full text-xl text-white bg-blue-400 leading-none">N</div>
+            </div>
+
+            <div class="px-6 py-8 overflow-y-auto">
+                <router-view></router-view>
+            </div>
         </div>
     </div>
 </template>
