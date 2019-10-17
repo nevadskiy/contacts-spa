@@ -9,6 +9,6 @@ Vue.use(VueRouter);
 Vue.component('app', App);
 
 const app = new Vue({
-    el: '#app',
-    router: new VueRouter(routes),
+  el: '#app',
+  router: new VueRouter(routes),
 });
