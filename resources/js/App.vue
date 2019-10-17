@@ -32,7 +32,7 @@
             <div class="mt-16 ml-6">
                 <h5 class="text-gray-500 font-bold uppercase">Create</h5>
 
-                <router-link :to="{ name: 'home' }" class="mt-4 flex items-center text-gray-800 hover:text-blue-500">
+                <router-link :to="{ name: 'contacts.create' }" class="mt-4 flex items-center text-gray-800 hover:text-blue-500">
                     <svg class="w-5 h-5 fill-current text-blue-600" viewBox="0 0 448 448" xmlns="http://www.w3.org/2000/svg">
                         <path d="m408 184h-136c-4.417969 0-8-3.582031-8-8v-136c0-22.089844-17.910156-40-40-40s-40 17.910156-40 40v136c0 4.417969-3.582031 8-8 8h-136c-22.089844 0-40 17.910156-40 40s17.910156 40 40 40h136c4.417969 0 8 3.582031 8 8v136c0 22.089844 17.910156 40 40 40s40-17.910156 40-40v-136c0-4.417969 3.582031-8 8-8h136c22.089844 0 40-17.910156 40-40s-17.910156-40-40-40zm0 0"/>
                     </svg>
@@ -88,7 +88,7 @@
             </div>
         </nav>
 
-        <div class="flex flex-1 flex-col">
+        <div class="flex flex-1 flex-col bg-gray-100">
             <div class="flex flex-shrink-0 items-center justify-between py-6 px-6 border-b border-gray-400">
                 <h1 class="text-gray-800">Latest Contacts</h1>
                 <div class="w-10 h-10 flex justify-center items-center border border-gray-400 rounded-full text-xl text-white bg-blue-400 leading-none">N</div>

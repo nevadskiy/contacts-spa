@@ -1,4 +1,5 @@
-import ExampleComponent from './components/ExampleComponent.vue';
+import Home from './views/Home.vue';
+import ContactsCreate from './views/contacts/Create.vue';
 
 export default {
     mode: 'history',
@@ -7,7 +8,12 @@ export default {
         {
             path: '/',
             name: 'home',
-            component: ExampleComponent
+            component: Home
+        },
+        {
+            path: '/contacts/create',
+            name: 'contacts.create',
+            component: ContactsCreate,
         }
     ],
 };
