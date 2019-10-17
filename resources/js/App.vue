@@ -100,3 +100,30 @@
         </div>
     </div>
 </template>
+
+<script>
+export default {
+  props: {
+    user: {
+      type: Object,
+      required: true,
+    },
+  },
+
+  created() {
+    this.setAuthentication();
+  },
+
+  methods: {
+    setAuthentication() {
+      window.axios.interceptors.request.use((config) => {
+        Object.assign(config.headers, {
+          Authorization: `Bearer ${this.user.api_token}`,
+        });
+
+        return config;
+      });
+    },
+  },
+};
+</script>
