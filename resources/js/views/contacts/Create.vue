@@ -40,9 +40,9 @@
                 class="mt-8"
             />
 
-            <div class="flex justify-end mt-2">
-                <button class="py-2 px-4 rounded text-red-700 border hover:border-red-700">Cancel</button>
-                <button class="ml-4 py-2 px-4 rounded bg-blue-500 text-gray-100 hover:bg-blue-400">Add New Contact</button>
+            <div class="flex items-center justify-end mt-2">
+                <AppButton class="text-red-700 border hover:border-red-700">Cancel</AppButton>
+                <AppButton class="ml-4 bg-blue-500 text-gray-100 hover:bg-blue-400">Add New Contact</AppButton>
             </div>
         </form>
     </div>
@@ -50,10 +50,12 @@
 
 <script>
 import AppInput from '../../components/AppInput.vue';
+import AppButton from '../../components/AppButton.vue';
 
 export default {
   components: {
     AppInput,
+    AppButton,
   },
 
   data() {
@@ -73,7 +75,7 @@ export default {
     submit() {
       window.axios.post('/api/contacts', this.form)
         .then((response) => {
-          console.log(response);
+          this.redirect(response.data.data);
         })
         .catch((error) => {
           if (error.response.status === 422) {
@@ -81,10 +83,10 @@ export default {
           }
         });
     },
+
+    redirect(contact) {
+      this.$router.push({ name: 'contacts.show', params: { id: contact.id } });
+    },
   },
 };
 </script>
-
-<style scoped>
-
-</style>
