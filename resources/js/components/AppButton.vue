@@ -4,6 +4,7 @@
         :to="to"
         :class="classes"
         class="inline-block px-4 rounded leading-none"
+        @click="$emit('click')"
     >
         <slot></slot>
     </component>
