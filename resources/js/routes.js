@@ -1,6 +1,7 @@
 import Home from './views/Home.vue';
 import ContactsCreate from './views/contacts/Create.vue';
 import ContactsShow from './views/contacts/Show.vue';
+import ContactsEdit from './views/contacts/Show.vue';
 
 export default {
   mode: 'history',
@@ -20,6 +21,11 @@ export default {
       path: '/contacts/:id',
       name: 'contacts.show',
       component: ContactsShow,
+    },
+    {
+      path: '/contacts/:id/edit',
+      name: 'contacts.edit',
+      component: ContactsEdit,
     },
   ],
 };
