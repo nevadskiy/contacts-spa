@@ -19,6 +19,7 @@ class ContactsShowTest extends ApiTestCase
             'data' => [
                 'id' => $contact->id,
                 'name' => $contact->name,
+                'email' => $contact->email,
                 'birthday' => $contact->birthday->format('m/d/Y'),
                 'company' => $contact->company,
                 'last_updated' => $contact->updated_at->diffForHumans(),
