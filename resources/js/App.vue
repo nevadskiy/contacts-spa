@@ -91,7 +91,7 @@
         <div class="flex flex-1 flex-col bg-gray-100">
             <div class="flex flex-shrink-0 items-center justify-between py-6 px-6 border-b border-gray-400">
                 <h1 class="text-gray-800">Latest Contacts</h1>
-                <div class="w-10 h-10 flex justify-center items-center border border-gray-400 rounded-full text-xl text-white bg-blue-400 leading-none">N</div>
+                <AppAvatar :name="user.name"/>
             </div>
 
             <div class="px-6 py-8 overflow-y-auto">
@@ -102,7 +102,13 @@
 </template>
 
 <script>
+import AppAvatar from './components/AppAvatar.vue';
+
 export default {
+  components: {
+    AppAvatar,
+  },
+
   props: {
     user: {
       type: Object,
