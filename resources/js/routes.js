@@ -1,7 +1,7 @@
-import Home from './views/Home.vue';
 import ContactsCreate from './views/contacts/Create.vue';
 import ContactsShow from './views/contacts/Show.vue';
 import ContactsEdit from './views/contacts/Edit.vue';
+import ContactsIndex from './views/contacts/Index.vue';
 
 export default {
   mode: 'history',
@@ -10,7 +10,7 @@ export default {
     {
       path: '/',
       name: 'home',
-      component: Home,
+      redirect: { name: 'contacts.index' },
     },
     {
       path: '/contacts/create',
@@ -26,6 +26,11 @@ export default {
       path: '/contacts/:id/edit',
       name: 'contacts.edit',
       component: ContactsEdit,
+    },
+    {
+      path: '/contacts',
+      name: 'contacts.index',
+      component: ContactsIndex,
     },
   ],
 };

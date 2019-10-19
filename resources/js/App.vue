@@ -43,7 +43,7 @@
             <div class="mt-16 ml-6">
                 <h5 class="text-gray-500 font-bold uppercase">General</h5>
 
-                <router-link :to="{ name: 'home' }" class="mt-4 flex items-center text-gray-800 hover:text-blue-500">
+                <router-link :to="{ name: 'contacts.index' }" class="mt-4 flex items-center text-gray-800 hover:text-blue-500">
                     <svg class="w-5 h-5 fill-current text-blue-600" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                         <path d="M452,40h-24V0h-40v40H124V0H84v40H60C26.916,40,0,66.916,0,100v352c0,33.084,26.916,60,60,60h392 c33.084,0,60-26.916,60-60V100C512,66.916,485.084,40,452,40z M472,452c0,11.028-8.972,20-20,20H60c-11.028,0-20-8.972-20-20V188 h432V452z M472,148H40v-48c0-11.028,8.972-20,20-20h24v40h40V80h264v40h40V80h24c11.028,0,20,8.972,20,20V148z"/>
                         <rect x="76" y="230" width="40" height="40"/>

@@ -126,7 +126,7 @@ export default {
     },
 
     confirmDelete() {
-      window.axios.delete(`/api/delete${this.contact.id}`)
+      window.axios.delete(`/api/contacts/${this.contact.id}`)
         .then(() => {
           this.$router.push({ name: 'contacts.index' });
         })
