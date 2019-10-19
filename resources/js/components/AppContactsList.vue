@@ -4,7 +4,9 @@
 
         <div v-else>
             <div v-if="contacts.length === 0">
-                <p>No contacts yet. <router-link to="{ name: 'contacts.create' }">Get Started</router-link></p>
+                <slot name="empty">
+                    <p>No contacts yet. <router-link to="{ name: 'contacts.create' }" class="text-blue-500">Get Started</router-link></p>
+                </slot>
             </div>
 
             <AppContact
