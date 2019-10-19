@@ -4,9 +4,7 @@
 
         <div v-else>
             <div class="flex justify-between">
-                <div class="text-blue-400">
-                    &lt; Back
-                </div>
+                <AppBackButton />
 
                 <div>
                     <AppButton
@@ -82,6 +80,7 @@ import AppButton from '../../components/AppButton.vue';
 import AppAvatar from '../../components/AppAvatar.vue';
 import AppLoader from '../../components/AppLoader.vue';
 import AppModal from '../../components/AppModal.vue';
+import AppBackButton from '../../components/AppBackButton.vue';
 
 export default {
   components: {
@@ -89,6 +88,7 @@ export default {
     AppAvatar,
     AppLoader,
     AppModal,
+    AppBackButton,
   },
 
   data() {
