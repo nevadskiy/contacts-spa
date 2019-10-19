@@ -3,6 +3,7 @@
 namespace App;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -50,5 +51,16 @@ class Contact extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Scope by birthday contacts.
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeBirthdays(Builder $query): Builder
+    {
+        return $query->whereMonth('birthday', now());
     }
 }

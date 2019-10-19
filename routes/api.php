@@ -10,4 +10,6 @@ Route::group([
     Route::put('contacts/{contact}', 'ContactsController@update');
     Route::delete('contacts/{contact}', 'ContactsController@destroy');
 
+    Route::get('birthdays', 'BirthdaysController@index');
+
 });
