@@ -40,14 +40,14 @@ class ContactsController extends Controller
 
     public function update(Request $request, Contact $contact)
     {
-        $this->validate($request, [
+        $data = $this->validate($request, [
             'name' => ['required'],
             'email' => ['required', 'email'],
             'birthday' => ['required', 'date'],
             'company' => ['required'],
         ]);
 
-        $contact->update($request->all());
+        $contact->update($data);
 
         return new ContactResource($contact->fresh());
     }
