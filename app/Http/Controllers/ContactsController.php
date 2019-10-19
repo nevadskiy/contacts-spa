@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Contact;
+use App\Http\Requests\ContactStoreRequest;
+use App\Http\Requests\ContactUpdateRequest;
 use App\Http\Resources\ContactResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -16,21 +18,18 @@ class ContactsController extends Controller
 
     public function index(Request $request)
     {
-        return ContactResource::collection($request->user()->contacts);
+        return ContactResource::collection(
+            $request->user()->contacts
+        );
     }
 
-    public function store(Request $request)
+    public function store(ContactStoreRequest $request)
     {
-        $data = $this->validate($request, [
-            'name' => ['required'],
-            'email' => ['required', 'email'],
-            'birthday' => ['required', 'date'],
-            'company' => ['required'],
-        ]);
-
-        $contact = $request->user()->contacts()->create($data);
-
-        return new ContactResource($contact);
+        return new ContactResource(
+            $request->user()->contacts()->create(
+                $request->validated()
+            )
+        );
     }
 
     public function show(Request $request, Contact $contact)
@@ -38,21 +37,14 @@ class ContactsController extends Controller
         return new ContactResource($contact);
     }
 
-    public function update(Request $request, Contact $contact)
+    public function update(ContactUpdateRequest $request, Contact $contact)
     {
-        $data = $this->validate($request, [
-            'name' => ['required'],
-            'email' => ['required', 'email'],
-            'birthday' => ['required', 'date'],
-            'company' => ['required'],
-        ]);
+        $contact->update($request->validated());
 
-        $contact->update($data);
-
-        return new ContactResource($contact->fresh());
+        return new ContactResource($contact);
     }
 
-    public function destroy(Request $request, Contact $contact)
+    public function destroy( Contact $contact)
     {
         $contact->delete();
 
