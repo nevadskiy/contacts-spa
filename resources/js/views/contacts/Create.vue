@@ -1,8 +1,6 @@
 <template>
     <div>
         <form @submit.prevent="submit">
-            <h1>Create contact</h1>
-
             <AppInput
                 v-model="form.name"
                 :errors="errors.name"
