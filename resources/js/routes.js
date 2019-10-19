@@ -1,7 +1,7 @@
 import Home from './views/Home.vue';
 import ContactsCreate from './views/contacts/Create.vue';
 import ContactsShow from './views/contacts/Show.vue';
-import ContactsEdit from './views/contacts/Show.vue';
+import ContactsEdit from './views/contacts/Edit.vue';
 
 export default {
   mode: 'history',
