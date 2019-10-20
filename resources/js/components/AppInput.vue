@@ -7,7 +7,7 @@
             :type="type"
             :placeholder="placeholder"
             :value="value"
-            class="w-full py-2 text-gray-800 border-b outline-none bg-transparent focus:border-blue-400"
+            class="w-full py-2 text-gray-800 border-b bg-transparent focus:outline-none focus:border-blue-400"
             :class="inputClasses"
             @input="update"
         >
