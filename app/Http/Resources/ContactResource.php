@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @property Contact contact
+ * @mixin Contact
  */
 class ContactResource extends JsonResource
 {
@@ -21,12 +21,12 @@ class ContactResource extends JsonResource
     {
         return [
             'data' => [
-                'id' => $this->resource->id,
-                'name' => $this->resource->name,
-                'email' => $this->resource->email,
-                'birthday' => $this->resource->birthday->format('m/d/Y'),
-                'company' => $this->resource->company,
-                'last_updated' => $this->resource->updated_at->diffForHumans(),
+                'id' => $this->id,
+                'name' => $this->name,
+                'email' => $this->email,
+                'birthday' => $this->birthday->format('m/d/Y'),
+                'company' => $this->company,
+                'last_updated' => $this->updated_at->diffForHumans(),
             ],
             'links' => [
                 'self' => route('contacts.show', $this->resource),
