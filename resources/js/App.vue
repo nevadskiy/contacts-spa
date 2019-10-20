@@ -90,7 +90,7 @@
 
         <div class="flex flex-1 flex-col bg-gray-100">
             <div class="flex flex-shrink-0 items-center justify-between py-6 px-6 border-b border-gray-400">
-                <h1 class="text-gray-800">Latest Contacts</h1>
+                <h1 class="text-gray-800">{{ title }}</h1>
 
                 <div class="flex items-center">
                     <AppSearchBar />
@@ -119,6 +119,25 @@ export default {
     user: {
       type: Object,
       required: true,
+    },
+  },
+
+  data() {
+    return {
+      title: '',
+    };
+  },
+
+  watch: {
+    $route: {
+      immediate: true,
+      handler(to) {
+        this.title = to.meta.title;
+      },
+    },
+
+    title() {
+      document.title = `${this.title} | The SPA App`;
     },
   },
 
