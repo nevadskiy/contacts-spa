@@ -54,8 +54,8 @@ prune-networks:
 
 # Add permissions for cache and store folders
 permissions:
-	sudo chmod -R 777 api/bootstrap/cache
-	sudo chmod -R 777 api/storage
+	sudo chmod -R 777 bootstrap/cache
+	sudo chmod -R 777 storage
 
 # Run tinker
 tinker:
