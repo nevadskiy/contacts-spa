@@ -91,7 +91,11 @@
         <div class="flex flex-1 flex-col bg-gray-100">
             <div class="flex flex-shrink-0 items-center justify-between py-6 px-6 border-b border-gray-400">
                 <h1 class="text-gray-800">Latest Contacts</h1>
-                <AppAvatar :name="user.name"/>
+
+                <div class="flex items-center">
+                    <AppSearchBar />
+                    <AppAvatar :name="user.name" class="ml-6"/>
+                </div>
             </div>
 
             <div class="px-6 py-8 overflow-y-auto">
@@ -103,10 +107,12 @@
 
 <script>
 import AppAvatar from './components/AppAvatar.vue';
+import AppSearchBar from './components/AppSearchBar.vue';
 
 export default {
   components: {
     AppAvatar,
+    AppSearchBar,
   },
 
   props: {
