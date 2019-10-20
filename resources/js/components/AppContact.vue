@@ -2,6 +2,7 @@
     <router-link
         :to="{ name: 'contacts.show', params: { id: contact.data.id } }"
         class="flex items-center py-3 px-2 hover:bg-gray-200"
+        @click.native="$emit('click')"
     >
         <AppAvatar :name="contact.data.name" />
 

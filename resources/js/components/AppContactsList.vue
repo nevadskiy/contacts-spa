@@ -2,7 +2,7 @@
     <div>
         <AppLoader v-if="loading" />
 
-        <div v-else>
+        <template v-else>
             <div v-if="contacts.length === 0">
                 <slot name="empty">
                     <p>No contacts yet. <router-link to="{ name: 'contacts.create' }" class="text-blue-500">Get Started</router-link></p>
@@ -15,7 +15,7 @@
                 :contact="contact"
                 class="border-b last:border-b-0 border-gray-200"
             />
-        </div>
+        </template>
     </div>
 </template>
 

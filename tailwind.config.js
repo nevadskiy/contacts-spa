@@ -1,6 +1,10 @@
 module.exports = {
   theme: {
-    extend: {},
+    extend: {
+      width: {
+        96: '24rem',
+      },
+    },
   },
   variants: {
     borderWidth: ['responsive', 'last', 'hover', 'focus'],

@@ -99,6 +99,12 @@ export default {
     };
   },
 
+  watch: {
+    $route() {
+      this.fetch();
+    },
+  },
+
   created() {
     this.fetch();
   },

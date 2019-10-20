@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Contact;
 use App\Http\Resources\ContactResource;
+use App\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,13 +18,13 @@ class SearchController extends Controller
         ]);
 
         return ContactResource::collection(
-            $this->searchContacts($data['query'])
+            $this->searchContacts($request->user(), $data['query'])
         );
     }
 
-    private function searchContacts(string $query): Collection
+    private function searchContacts(User $user, string $query): Collection
     {
-        return Contact::query()
+        return $user->contacts()
             ->where(DB::raw('LOWER(name)'), 'like', '%' . Str::lower($query) .'%')
             ->get();
     }
