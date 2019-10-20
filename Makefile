@@ -89,10 +89,13 @@ db-seed:
 db-fresh:
 	docker-compose exec php-cli php artisan migrate:fresh
 
-# Fresh all migrations
+# Generate the app key
 key:
 	docker-compose exec php-cli php artisan key:generate --ansi
 
+# Create the config file
+config:
+	cp ./.env.example ./.env
 
 #-----------------------------------------------------------
 # Database
@@ -107,6 +110,10 @@ db-dump:
 # Front-End
 #-----------------------------------------------------------
 
+assets:
+	docker-compose exec node yarn dev
+
+
 watch:
 	docker-compose exec node yarn watch
 
@@ -115,8 +122,13 @@ watch:
 # Dependencies
 #-----------------------------------------------------------
 
+dependencies: composer-install yarn-install
+
 composer-install:
 	docker-compose exec php-cli composer install
 
-dependencies-update:
+composer-up:
 	docker-compose exec php-cli composer update
+
+yarn-install:
+	docker-compose exec node yarn
