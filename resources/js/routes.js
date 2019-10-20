@@ -3,6 +3,7 @@ import ContactsShow from './views/contacts/Show.vue';
 import ContactsEdit from './views/contacts/Edit.vue';
 import ContactsIndex from './views/contacts/Index.vue';
 import BirthdaysIndex from './views/birthdays/Index.vue';
+import Logout from './actions/Logout.vue';
 
 export default {
   mode: 'history',
@@ -43,6 +44,12 @@ export default {
       name: 'birthdays.index',
       component: BirthdaysIndex,
       meta: { title: 'This Month\'s Birthdays' },
+    },
+    {
+      path: '/logout',
+      name: 'logout',
+      component: Logout,
+      meta: { title: 'Logout' },
     },
   ],
 };
