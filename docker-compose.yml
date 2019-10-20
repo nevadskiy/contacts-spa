@@ -93,17 +93,6 @@ services:
       # Inbox web page
       - 8026:8025
 
-  ### Laravel Echo Server ################
-  laravel-echo-server:
-    build:
-      context: docker/laravel-echo-server
-      dockerfile: Dockerfile
-    ports:
-      - 6002:6001
-    links:
-      - redis
-      - supervisor
-
   ### Supervisor ###################
   supervisor:
     build:
