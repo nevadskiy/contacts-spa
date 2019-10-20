@@ -100,13 +100,12 @@ export default {
   },
 
   watch: {
-    $route() {
-      this.fetch();
+    $route: {
+      immediate: true,
+      handler() {
+        this.fetch();
+      },
     },
-  },
-
-  created() {
-    this.fetch();
   },
 
   methods: {
