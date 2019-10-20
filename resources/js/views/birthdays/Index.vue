@@ -1,7 +1,7 @@
 <template>
     <AppContactsList endpoint="/api/birthdays">
         <template v-slot:empty>
-            <p>No birthdays today.</p>
+            <p>No birthdays this month.</p>
         </template>
     </AppContactsList>
 </template>
