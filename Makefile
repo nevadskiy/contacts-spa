@@ -132,3 +132,10 @@ composer-up:
 
 yarn-install:
 	docker-compose exec node yarn
+
+
+#-----------------------------------------------------------
+# Installation
+#-----------------------------------------------------------
+
+install: build dependencies config key permissions db-migrate assets
