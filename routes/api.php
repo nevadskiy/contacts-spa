@@ -12,4 +12,6 @@ Route::group([
 
     Route::get('birthdays', 'BirthdaysController@index');
 
+    Route::get('search', 'SearchController@index');
+
 });

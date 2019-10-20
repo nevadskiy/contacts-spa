@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * @property int id
  * @property string name
+ * @property string email
  * @property Carbon birthday
  * @property string company
  * @property Carbon updated_at
